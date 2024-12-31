@@ -6,8 +6,12 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const admin = require("firebase-admin");
 const serviceAccountKey = require("./firebase/serviceAccountKey.json");
+// admin.initializeApp({
+//     credential: admin.credential.cert(serviceAccountKey),
+//   });
+
 admin.initializeApp({
-    credential: admin.credential.cert(serviceAccountKey),
+    credential: admin.credential.applicationDefault(),
   });
 
  

@@ -5,6 +5,20 @@ const AuthHelper = require("../helper/AuthHelper");
 
 const AuthController = module.exports;
 
+AuthController.checkNgrokConnection = async (req,res) =>{
+  try {
+
+    res.status(201).json({
+      message: "Worked properly",
+     
+    });
+    
+  } catch (error) {
+    console.log(error)
+    
+  }
+}
+
 AuthController.signUp = async (req, res) => {
   try {
     const { firstName, lastName, email, password, roles } = req.body;
