@@ -10,7 +10,7 @@ const TaskController = module.exports;
 
 
 
-const sendNotification = async (token, title, message, assigneeUserId) => {
+const sendNotification = async (token, title, message, assigneeUserEmail) => {
  
   try {
     
@@ -19,8 +19,12 @@ const sendNotification = async (token, title, message, assigneeUserId) => {
       token: token,
       notification: {
         title: `${message}`,
-        body: title,
+        body: title
       },
+      data: {
+        assigneeEmail: assigneeUserEmail, // Add custom data here
+      },
+      
     });
   } catch (error) {
     console.error("Notification failed:", error);
@@ -88,13 +92,14 @@ TaskController.createTask = async (req, res) => {
 
       if (assigneeUser.fcmToken) {
         const notificationTitle = `New Task Assigned: ${title}: ${description}`;
-        const notificationMessage = `You have been assigned a new task by ${assigneeUser.email}.`;
+        const notificationMessage = `You have been assigned a new task by ${user.email}.`;
         notificationPromises.push(
           sendNotification(
             assigneeUser.fcmToken,
             notificationTitle,
             notificationMessage,
-            assigneeUser._id
+            assigneeUser.email,
+            
           )
         );
       }
